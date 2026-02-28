@@ -4,6 +4,7 @@ Jetayu Gadgets — Competitor Price Monitor
 Run with: python run.py
 """
 
+import shutil
 import subprocess
 import sys
 import os
@@ -51,6 +52,11 @@ def main():
     from dashboard import generate_dashboard
     dash_path = os.path.join(DATA_DIR, "dashboard.html")
     generate_dashboard(snapshot_path, changes, dash_path)
+
+    # Copy to docs/ for GitHub Pages
+    docs_dir = os.path.join(ROOT, "docs")
+    os.makedirs(docs_dir, exist_ok=True)
+    shutil.copy2(dash_path, os.path.join(docs_dir, "index.html"))
 
     elapsed = time.time() - t0
     print(f"\n{'=' * 60}")
